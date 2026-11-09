@@ -44,9 +44,16 @@ export async function createBooking(data: {
 }) {
   const res = await fetch(`${BASE}/bookings`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error(`booking ${res.status}`);
+  if (!res.ok) {
+    // Laravel returns 422 {message, errors:{field:[msg]}} — surface the first one.
+    const body = await res.json().catch(() => null);
+    const first = body?.errors ? Object.values(body.errors)[0] : null;
+    throw new Error(
+      Array.isArray(first) && first.length ? String(first[0]) : `booking ${res.status}`
+    );
+  }
   return res.json() as Promise<{ ok: boolean; code: string; total_price: number }>;
 }

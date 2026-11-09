@@ -70,8 +70,9 @@ export default function BookingWidget() {
       });
       setStatus({ type: "ok", msg: `Booking ${res.code} tersimpan (${rp(res.total_price)}).` });
       window.location.href = waUrl; // same-tab → not blocked by popup blocker
-    } catch {
-      setStatus({ type: "err", msg: "Gagal simpan booking. Coba WhatsApp." });
+    } catch (e) {
+      const msg = e instanceof Error && e.message !== "booking 422" ? e.message : "Cek kembali data pesanan.";
+      setStatus({ type: "err", msg: `Gagal simpan booking: ${msg}` });
     } finally {
       setBusy(false);
     }
