@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b0b;
+  --color-gold: #c9a227;
+  --color-gold-light: #e9cf6b;
+  --color-sea: #0e7490;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-glow: glow 3.2s ease-in-out infinite;
+  --animate-spin-slow: spin 16s linear infinite;
+  --animate-dash: dash 2.5s linear infinite;
+  --animate-gradient: gradientMove 8s ease infinite;
+  --animate-pulse-ring: pulseRing 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-tilt: tilt 7s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.08); }
+}
+@keyframes dash {
+  to { stroke-dashoffset: -240; }
+}
+@keyframes gradientMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes pulseRing {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(38px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tilt {
+  0%, 100% { transform: rotate(-1.2deg) translateY(0); }
+  50% { transform: rotate(1.2deg) translateY(-8px); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  overflow-x: hidden;
+}
+
+/* Scroll reveal */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(34px);
+    transition:
+      opacity 0.75s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #e9cf6b, #c9a227 45%, #f6e6a8 75%, #c9a227);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientMove 7s ease infinite;
+  }
+  .shimmer-line {
+    background: linear-gradient(90deg, transparent, rgba(233, 207, 107, 0.7), transparent);
+    background-size: 200% 100%;
+  }
+  .glass {
+    background: rgba(11, 11, 11, 0.55);
+    backdrop-filter: blur(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #000;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0b0b;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9a227;
+  border-radius: 8px;
+}
