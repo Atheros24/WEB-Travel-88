@@ -24,6 +24,7 @@ export default function BookingWidget() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
+  const [done, setDone] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -64,6 +65,7 @@ export default function BookingWidget() {
     if (!name.trim() || !phone.trim()) return setStatus({ type: "err", msg: "Isi nama & nomor HP." });
     setBusy(true);
     setStatus(null);
+    setDone(null);
     try {
       const res = await createBooking({
         customer_name: name.trim(),
@@ -73,8 +75,8 @@ export default function BookingWidget() {
         travel_date: date,
         pax,
       });
-      setStatus({ type: "ok", msg: `Booking ${res.code} tersimpan (${rp(res.total_price)}).` });
-      window.location.href = waUrl; // same-tab → not blocked by popup blocker
+      setStatus({ type: "ok", msg: `Booking ${res.code} tersimpan — total ${rp(res.total_price)}.` });
+      setDone(res.code);
     } catch (e) {
       const msg = e instanceof Error && e.message !== "booking 422" ? e.message : "Cek kembali data pesanan.";
       setStatus({ type: "err", msg: `Gagal simpan booking: ${msg}` });
@@ -215,16 +217,40 @@ export default function BookingWidget() {
         <p className={`mb-3 text-xs ${status.type === "ok" ? "text-emerald-400" : "text-red-400"}`}>{status.msg}</p>
       )}
 
-      <button
-        type="button"
-        onClick={submit}
-        disabled={busy}
-        className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gold px-6 py-3.5 font-semibold text-black transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
-      >
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 hover:translate-x-full" />
-        <IconWhatsapp width={18} height={18} />
-        {busy ? "Memproses..." : "Pesan Sekarang"}
-      </button>
+      {done ? (
+        <div className="flex flex-col gap-2">
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-6 py-3.5 font-semibold text-black transition hover:brightness-110"
+          >
+            <IconWhatsapp width={18} height={18} />
+            Lanjut ke WhatsApp
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              setDone(null);
+              setStatus(null);
+            }}
+            className="rounded-xl border border-white/15 px-6 py-2.5 text-sm text-gray-300 transition hover:border-white/40 hover:text-white"
+          >
+            Pesan lagi
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={submit}
+          disabled={busy}
+          className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gold px-6 py-3.5 font-semibold text-black transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+        >
+          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 hover:translate-x-full" />
+          <IconWhatsapp width={18} height={18} />
+          {busy ? "Memproses..." : "Pesan Sekarang"}
+        </button>
+      )}
     </div>
   );
 }
