@@ -69,7 +69,13 @@ class VehicleController extends Controller
         unset($data['image_file'], $data['remove_image']);
 
         $data['is_active'] = $request->boolean('is_active');
-        $data['slug'] = str($data['name'])->slug()->value();
+        // Keep the slug stable on rename: it is the public image fallback (/mobil/<slug>.jpg)
+        // and re-slugging a rename can collide with an existing unit.
+        if (! $vehicle) {
+            $data['slug'] = str($data['name'])->slug()->value();
+        } else {
+            unset($data['slug']);
+        }
 
         if ($request->hasFile('image_file')) {
             $this->deleteImage($vehicle?->image);
