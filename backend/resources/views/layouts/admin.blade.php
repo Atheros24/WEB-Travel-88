@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="h-full bg-zinc-950 text-zinc-200 antialiased">
-<div class="flex min-h-full">
-    <aside class="hidden w-60 shrink-0 border-r border-zinc-800 bg-zinc-900/60 md:block">
+<div class="flex min-h-full flex-col md:flex-row">
+    <aside class="w-full shrink-0 border-b border-zinc-800 bg-zinc-900/60 md:w-60 md:border-b-0 md:border-r">
         <div class="border-b border-zinc-800 px-5 py-4">
             <div class="font-bold tracking-tight text-amber-400">SM88 Trans</div>
             <div class="text-xs text-zinc-500">Admin Panel</div>
         </div>
-        <nav class="space-y-1 p-3 text-sm">
+        <nav class="flex gap-1 overflow-x-auto p-3 text-sm md:block md:space-y-1">
             @foreach ([
                 ['admin.dashboard', 'Dashboard'],
                 ['admin.bookings.index', 'Booking'],
@@ -22,7 +22,7 @@
                 ['admin.testimonials.index', 'Testimoni'],
                 ['admin.users.index', 'User'],
             ] as [$name, $label])
-                <a href="{{ route($name) }}" class="block rounded-lg px-3 py-2 transition {{ request()->routeIs($name) ? 'bg-amber-400 font-semibold text-black' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white' }}">{{ $label }}</a>
+                <a href="{{ route($name) }}" class="block whitespace-nowrap rounded-lg px-3 py-2 transition {{ request()->routeIs($name) ? 'bg-amber-400 font-semibold text-black' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white' }}">{{ $label }}</a>
             @endforeach
         </nav>
     </aside>
