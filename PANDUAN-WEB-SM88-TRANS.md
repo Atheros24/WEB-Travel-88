@@ -116,7 +116,15 @@ Setiap kartu layanan juga bisa diklik → langsung WhatsApp.
 
 ### 3.7 Armada
 
-Kartu-kartu kendaraan. Tiap kartu menampilkan foto mobil, kelas (Premium / Van / MPV / Bus Mini), dan kapasitas penumpang. Bisa diklik → WhatsApp nomor Carter.
+Kartu-kartu kendaraan. Tiap kartu menampilkan foto mobil, kelas (Premium / Van / MPV / Bus Mini), kapasitas penumpang, dan **label status** di kiri bawah foto:
+
+| Label | Warna | Arti |
+|---|---|---|
+| **Tersedia** | Hijau | Siap dipakai |
+| **Penuh** | Merah | Kursi habis |
+| **Perawatan** | Kuning | Sedang di bengkel |
+
+Status ini kamu atur sendiri di **Panel Admin → Armada**. Bisa diklik → WhatsApp nomor Carter.
 
 ### 3.8 Keunggulan
 
@@ -322,11 +330,55 @@ Sistem menghitung sendiri, kamu tidak perlu hitung manual.
 
 ### 7.1 Melihat daftar armada
 
-Klik **Armada**. Tabel: nama unit, kelas, kapasitas, harga/hari, status aktif.
+Klik **Armada**. Di paling atas ada **ringkasan ketersediaan** — 4 kotak angka:
 
-Klik baris untuk membuka formulir edit.
+| Kotak | Arti |
+|---|---|
+| **Tersedia** | Unit siap jalan |
+| **Penuh** | Kursi sudah habis / tidak bisa dipesan |
+| **Perawatan** | Unit masuk bengkel |
+| **Total Unit** | Jumlah seluruh unit |
 
-### 7.2 Menambah unit
+Angka-angka ini **menghitung sendiri** setiap kali kamu mengubah status unit.
+
+Di bawahnya ada tabel: nama unit, kelas, kapasitas, status, harga/hari, aktif. Klik baris untuk membuka formulir edit.
+
+> **Perhatian:** angka ringkasan menghitung **semua unit**, termasuk yang tidak aktif. Kalau ada unit yang disembunyikan dari website (tidak aktif), unit itu **tetap ikut dihitung**. Jadi kalau angka terasa lebih besar dari yang tampil di website, cek kolom **Aktif**.
+
+### 7.2 Arti status armada
+
+| Status | Arti | Warna di website | Kapan dipakai |
+|---|---|---|---|
+| **Tersedia** | Unit siap dipakai, kursi masih ada | Hijau | Kondisi normal |
+| **Penuh** | Kursi sudah habis untuk keberangkatan yang berjalan | Merah | Saat semua kursi terjual |
+| **Perawatan** | Unit sedang servis / bengkel | Kuning | Saat mobil tidak bisa dipakai |
+
+Status ini **muncul sebagai label di kartu armada pada website**, jadi calon penumpang tahu kondisi unit sebelum menghubungi.
+
+### 7.3 Mengubah status dengan cepat
+
+Di tabel, kolom **Status** berisi kotak pilihan.
+
+**Klik kotaknya → pilih status baru → langsung tersimpan otomatis.** Tidak perlu klik tombol Update, tidak perlu buka formulir.
+
+Cara ini paling sering dipakai — misalnya pagi hari semua unit masih *Tersedia*, lalu siang ada yang penuh, tinggal klik dan ganti.
+
+> Notifikasi hijau akan muncul di atas: *"Toyota Hiace Premio → Penuh."*
+
+### 7.4 Penting soal status "Penuh"
+
+Status **Penuh** adalah **tanda manual, bukan sistem otomatis**.
+
+Artinya: sistem **tidak** menghitung sendiri berapa kursi yang sudah terjual. Kamu yang menentukan kapan sebuah unit dianggap penuh.
+
+**Alur yang disarankan:**
+1. Pagi: cek menu **Booking** → lihat pesanan hari ini
+2. Kalau sebuah unit sudah terisi penuh, ubah statusnya jadi **Penuh**
+3. Besok pagi, kembalikan ke **Tersedia**
+
+> Kenapa manual? Karena sistem pemesanan saat ini **tidak mengikat pesanan ke unit tertentu** — pelanggan memilih rute, bukan memilih mobil. Jadi angka "sisa kursi" tidak bisa dihitung otomatis. Ini keterbatasan yang perlu kamu tahu (lihat bagian 12.2).
+
+### 7.5 Menambah unit
 
 1. Klik **"+ Tambah Armada"**.
 2. Isi:
@@ -336,6 +388,7 @@ Klik baris untuk membuka formulir edit.
 | **Nama Unit** | Contoh: Toyota Hiace Premio |
 | **Kelas** | Contoh: Premium Van, MPV, Bus Mini |
 | **Kapasitas (pax)** | Jumlah kursi |
+| **Status Ketersediaan** | Tersedia / Penuh / Perawatan |
 | **Harga / Hari (Rp)** | Boleh dikosongkan kalau tidak disewakan harian |
 | **Upload Gambar** | Foto mobil. Format JPG/PNG/WEBP, maksimal 4 MB |
 | **atau Path Gambar** | Untuk tenaga teknis — biasanya tidak perlu diisi |
@@ -343,7 +396,11 @@ Klik baris untuk membuka formulir edit.
 
 3. Klik **Simpan**.
 
-### 7.3 Soal foto armada
+### 7.6 Bug yang sudah diperbaiki (penting untuk kamu tahu)
+
+Sebelumnya, **mengubah nama unit** membuat sistem membuat "alamat" unit baru. Akibatnya unit bisa **terduplikasi** dan **fotonya hilang**. Sudah diperbaiki: nama boleh diganti berkali-kali, unit tetap satu, foto tetap aman.
+
+### 7.7 Soal foto armada
 
 **Cara paling mudah:** pakai tombol **Upload Gambar** dan pilih foto dari HP/komputer.
 
@@ -355,15 +412,15 @@ Saran foto:
 
 Kalau tidak ada foto, website otomatis menampilkan kotak abu-abu dengan ikon koper. Tidak error, hanya kurang menarik.
 
-### 7.4 Mengganti foto
+### 7.8 Mengganti foto
 
 Klik unit → pilih file baru di **Upload Gambar** → **Update**. Foto lama otomatis terhapus.
 
-### 7.5 Menghapus foto
+### 7.9 Menghapus foto
 
 Klik unit → centang **Hapus gambar** → **Update**.
 
-### 7.6 Menonaktifkan unit
+### 7.10 Menonaktifkan unit
 
 Hilangkan centang **Unit aktif** → **Update**. Unit hilang dari website, data tetap ada.
 
@@ -467,6 +524,7 @@ Di bawahnya ada jumlah User, Rute, Armada, Testimoni. Lalu tabel **"Booking Terb
 1. Buka Dashboard → lihat angka **Pending**
 2. Buka menu Booking → filter status **pending**
 3. Hubungi setiap pelanggan lewat WhatsApp
+4. Buka menu **Armada** → perbarui status unit (Tersedia / Penuh / Perawatan)
 
 **Setelah pelanggan bayar:**
 - Ubah status → **confirmed**
@@ -535,7 +593,7 @@ Minta testimoni → tambahkan di menu Testimoni
 | **Pembayaran online** | Belum ada transfer/QRIS otomatis. Pembayaran tetap manual, dikonfirmasi lewat WhatsApp |
 | **E-tiket PDF** | Pelanggan tidak menerima file tiket. Kode booking + chat WA jadi bukti sementara |
 | **Notifikasi otomatis** | Tidak ada WhatsApp/SMS otomatis ke pelanggan saat status berubah. Kamu harus hubungi manual |
-| **Cek kursi otomatis** | Sistem **tidak** menolak pesanan kalau kursi sudah penuh. Kamu harus cek sendiri di menu Booking (lihat tanggal & rute yang sama) |
+| **Cek kursi otomatis** | Sistem **tidak** menghitung sisa kursi. Status armada (Tersedia/Penuh) diisi **manual** oleh kamu. Lihat §7.4 |
 | **Hak akses per-menu** | Staff bisa mengubah harga seperti admin |
 | **Laporan keuangan** | Tidak ada rekap harian/bulanan, tidak ada export Excel |
 | **Multi-bahasa** | Hanya Bahasa Indonesia |
@@ -580,6 +638,22 @@ J: Data tersimpan di database dengan akses terbatas (harus login). Namun belum a
 **T: Pelanggan tidak punya WhatsApp?**
 J: Arahkan menelepon langsung ke 0812-2668-8882. Pesanan tetap bisa diinput admin.
 
+**T: Ada tulisan "Penuh" di kartu armada, apakah otomatis?**
+J: Tidak. Itu **tanda manual** dari kamu di Panel Admin → Armada. Sistem belum menghitung sisa kursi sendiri. Kalau lupa mengubahnya, status akan tetap "Penuh" sampai kamu ganti.
+
+**T: Apa bedanya "Penuh" dengan "Tidak aktif"?**
+J:
+- **Penuh (status)** — unit masih tampil di website, hanya diberi label merah. Pelanggan tetap bisa menghubungi.
+- **Tidak aktif** — unit **hilang sama sekali** dari website.
+
+Pakai **Penuh** untuk kondisi sementara (kursi habis hari ini). Pakai **Tidak aktif** kalau unit benar-benar tidak ditawarkan lagi.
+
+**T: Kenapa angka "Total Unit" di ringkasan berbeda dengan jumlah kartu di website?**
+J: Ringkasan menghitung **semua** unit termasuk yang tidak aktif. Website hanya menampilkan yang aktif.
+
+**T: Unit terduplikat setelah saya ganti nama?**
+J: Bug lama, sudah diperbaiki. Kalau masih melihat duplikat dari data lama, hapus salah satunya di menu Armada → Hapus.
+
 **T: Kalau website error / tidak bisa dibuka?**
 J: Coba refresh. Kalau tetap, tunggu 1–2 menit (server bisa "tidur" saat tidak ada kunjungan, lalu bangun sendiri). Kalau lebih dari 10 menit tetap mati, hubungi tenaga teknis.
 
@@ -598,8 +672,9 @@ J: Coba refresh. Kalau tetap, tunggu 1–2 menit (server bisa "tidur" saat tidak
 5. **Testimoni** → tambah ulasan
 6. **User** → atur akun
 
-**Tiga hal yang paling sering dipakai:**
+**Empat hal yang paling sering dipakai:**
 - Ganti status pesanan → menu **Booking**, klik kotak status
+- Ganti status armada → menu **Armada**, klik kotak Status
 - Ubah harga → menu **Rute**, klik baris, ubah angka, Update
 - Lihat pesanan baru → **Dashboard**, kotak **Pending**
 
@@ -611,6 +686,7 @@ J: Coba refresh. Kalau tetap, tunggu 1–2 menit (server bisa "tidur" saat tidak
 - [ ] Login panel admin, **ganti password**
 - [ ] Cek menu **Rute** — pastikan harga & durasi sudah benar
 - [ ] Cek menu **Armada** — pastikan nama, kapasitas, dan foto sudah benar
+- [ ] Cek status tiap unit (Tersedia/Penuh/Perawatan) — pastikan sesuai kondisi hari ini
 - [ ] Hapus testimoni contoh (Budi/Siti/Hendra) dan ganti dengan testimoni asli
 - [ ] Coba pesan 1 tiket sendiri dari website
 - [ ] Cek apakah pesanan itu muncul di menu **Booking**
