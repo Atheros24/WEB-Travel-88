@@ -20,10 +20,15 @@ export default function BookingWidget() {
   const [trip, setTrip] = useState<"single" | "pp">("single");
   const [pax, setPax] = useState(1);
   const [date, setDate] = useState("");
+  const [minDate, setMinDate] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    setMinDate(new Date().toISOString().slice(0, 10));
+  }, []);
 
   useEffect(() => {
     getRoutes()
@@ -181,7 +186,7 @@ export default function BookingWidget() {
           <input
             type="date"
             value={date}
-            min={new Date().toISOString().slice(0, 10)}
+            min={minDate}
             onChange={(e) => setDate(e.target.value)}
             className="rounded-lg border border-white/10 bg-ink px-3 py-2 text-sm text-white outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30"
           />
