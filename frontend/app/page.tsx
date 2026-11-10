@@ -6,6 +6,7 @@ import BookingWidget from "@/components/BookingWidget";
 import Armada, { ArmadaFallback } from "@/components/Armada";
 import Rute, { FooterRoutes, RuteFallback } from "@/components/Rute";
 import { HeroScene } from "@/components/Art";
+import { getTestimonials } from "@/lib/api";
 import {
   IconClock, IconTour, IconLandmark, IconPlane, IconBriefcase, IconGem, IconMap,
   IconShield, IconUserCheck, IconTimer, IconDoor, IconWhatsapp, IconStar,
@@ -284,29 +285,55 @@ function Testimoni() {
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Testimoni</span>
           <h2 className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">Kata Penumpang</h2>
         </Reveal>
-        <div className="mt-12 grid gap-5 sm:grid-cols-3">
-          {TESTIMONI.map((t, i) => (
-            <Reveal key={t.nama} delay={i * 120}>
-              <figure className="group relative h-full rounded-2xl border border-white/10 bg-gradient-to-b from-gray-900 to-black p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/50">
-                <div className="flex gap-1 text-gold">
-                  {[...Array(5)].map((_, s) => <IconStar key={s} />)}
-                </div>
-                <blockquote className="mt-4 text-gray-300">&ldquo;{t.text}&rdquo;</blockquote>
-                <figcaption className="mt-5 flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-gold to-yellow-600 font-display font-bold text-black">
-                    {t.nama[0]}
-                  </span>
-                  <div>
-                    <div className="text-sm font-bold text-white">{t.nama}</div>
-                    <div className="text-xs text-gray-500">{t.role}</div>
-                  </div>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+        <Suspense fallback={<TestimoniFallback />}>
+          <TestimoniGrid />
+        </Suspense>
       </div>
     </section>
+  );
+}
+
+function TestimoniFallback() {
+  return (
+    <div className="mt-12 grid gap-5 sm:grid-cols-3">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-52 animate-pulse rounded-2xl border border-white/10 bg-white/5" />
+      ))}
+    </div>
+  );
+}
+
+async function TestimoniGrid() {
+  let items = TESTIMONI;
+  try {
+    const data = await getTestimonials();
+    if (data.length) items = data.map((t) => ({ nama: t.name, role: t.role ?? "", text: t.text, rating: t.rating }));
+  } catch {
+    // ponytail: backend down → static list keeps the section alive
+  }
+
+  return (
+    <div className="mt-12 grid gap-5 sm:grid-cols-3">
+      {items.map((t, i) => (
+        <Reveal key={t.nama} delay={i * 120}>
+          <figure className="group relative h-full rounded-2xl border border-white/10 bg-gradient-to-b from-gray-900 to-black p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/50">
+            <div className="flex gap-1 text-gold">
+              {[...Array(5)].map((_, s) => <IconStar key={s} />)}
+            </div>
+            <blockquote className="mt-4 text-gray-300">&ldquo;{t.text}&rdquo;</blockquote>
+            <figcaption className="mt-5 flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-gold to-yellow-600 font-display font-bold text-black">
+                {t.nama[0]}
+              </span>
+              <div>
+                <div className="text-sm font-bold text-white">{t.nama}</div>
+                <div className="text-xs text-gray-500">{t.role}</div>
+              </div>
+            </figcaption>
+          </figure>
+        </Reveal>
+      ))}
+    </div>
   );
 }
 

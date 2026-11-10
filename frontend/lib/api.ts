@@ -34,6 +34,20 @@ export async function getVehicles(): Promise<ApiVehicle[]> {
   return res.json();
 }
 
+export type ApiTestimonial = {
+  id: number;
+  name: string;
+  role: string | null;
+  text: string;
+  rating: number;
+};
+
+export async function getTestimonials(): Promise<ApiTestimonial[]> {
+  const res = await fetch(`${BASE}/testimonials`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`testimonials ${res.status}`);
+  return res.json();
+}
+
 export async function createBooking(data: {
   customer_name: string;
   phone: string;
