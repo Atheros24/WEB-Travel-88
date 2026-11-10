@@ -181,6 +181,7 @@ export default function BookingWidget() {
           <input
             type="date"
             value={date}
+            min={new Date().toISOString().slice(0, 10)}
             onChange={(e) => setDate(e.target.value)}
             className="rounded-lg border border-white/10 bg-ink px-3 py-2 text-sm text-white outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30"
           />
