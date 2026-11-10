@@ -28,7 +28,10 @@ export default function BookingWidget() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    setMinDate(new Date().toISOString().slice(0, 10));
+    // Local calendar date, NOT toISOString() (UTC) — WIB 00:00–07:00 would yield yesterday.
+    const d = new Date();
+    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    setMinDate(local);
   }, []);
 
   useEffect(() => {

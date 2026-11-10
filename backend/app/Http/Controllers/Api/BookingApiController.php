@@ -37,6 +37,22 @@ class BookingApiController extends Controller
             'travel_date' => ['required', 'date', 'after_or_equal:today'],
             'pax' => ['required', 'integer', 'min:1', 'max:99'],
             'notes' => ['nullable', 'string', 'max:1000'],
+        ], [
+            // ponytail: only the fields this form exposes; full lang/ files if admin grows forms.
+            'customer_name.required' => 'Nama pemesan wajib diisi.',
+            'customer_name.max' => 'Nama pemesan maksimal 150 karakter.',
+            'phone.required' => 'Nomor HP wajib diisi.',
+            'phone.max' => 'Nomor HP maksimal 30 karakter.',
+            'travel_route_id.exists' => 'Rute tidak ditemukan.',
+            'trip_type.required' => 'Pilih tipe perjalanan.',
+            'trip_type.in' => 'Tipe perjalanan tidak valid.',
+            'travel_date.required' => 'Tanggal berangkat wajib diisi.',
+            'travel_date.date' => 'Format tanggal tidak valid.',
+            'travel_date.after_or_equal' => 'Tanggal berangkat tidak boleh sebelum hari ini.',
+            'pax.required' => 'Jumlah penumpang wajib diisi.',
+            'pax.integer' => 'Jumlah penumpang harus angka.',
+            'pax.min' => 'Minimal 1 penumpang.',
+            'pax.max' => 'Maksimal 99 penumpang.',
         ]);
 
         $route = isset($data['travel_route_id']) ? TravelRoute::find($data['travel_route_id']) : null;
