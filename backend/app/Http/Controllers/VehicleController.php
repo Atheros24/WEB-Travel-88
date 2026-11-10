@@ -10,7 +10,14 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        return view('admin.vehicles.index', ['vehicles' => Vehicle::latest()->paginate(15)]);
+        return view('admin.vehicles.index', [
+            'vehicles' => Vehicle::latest()->paginate(15),
+            'counts' => Vehicle::query()
+                ->selectRaw('status, count(*) as total')
+                ->groupBy('status')
+                ->pluck('total', 'status')
+                ->all(),
+        ]);
     }
 
     public function store(Request $request)
@@ -36,12 +43,23 @@ class VehicleController extends Controller
         return back()->with('ok', 'Armada dihapus.');
     }
 
+    public function setStatus(Request $request, Vehicle $vehicle)
+    {
+        $data = $request->validate([
+            'status' => ['required', 'in:available,full,maintenance'],
+        ]);
+        $vehicle->update($data);
+
+        return back()->with('ok', "{$vehicle->name} → {$vehicle->statusLabel()}.");
+    }
+
     private function validateData(Request $request, ?Vehicle $vehicle = null): array
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'class' => ['required', 'string', 'max:100'],
             'pax' => ['required', 'integer', 'min:1', 'max:99'],
+            'status' => ['required', 'in:available,full,maintenance'],
             'price_per_day' => ['nullable', 'integer', 'min:0'],
             'image' => ['nullable', 'string', 'max:255'],
             'image_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],

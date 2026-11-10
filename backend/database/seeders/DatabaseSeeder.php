@@ -27,12 +27,12 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ([
-            ['slug' => 'mercy-c300-amg', 'name' => 'Mercedes-Benz C300 AMG', 'class' => 'Premium', 'pax' => 4],
-            ['slug' => 'hiace-premio', 'name' => 'Toyota Hiace Premio', 'class' => 'Premium Van', 'pax' => 14],
-            ['slug' => 'hiace-commuter', 'name' => 'Toyota Hiace Commuter', 'class' => 'Van', 'pax' => 15],
-            ['slug' => 'elf-long-giga', 'name' => 'Isuzu Elf Long Giga', 'class' => 'Bus Mini', 'pax' => 20],
-            ['slug' => 'innova-venturer', 'name' => 'Toyota Innova Venturer', 'class' => 'MPV Premium', 'pax' => 7],
-            ['slug' => 'innova-reborn', 'name' => 'Toyota Innova Reborn', 'class' => 'MPV', 'pax' => 7],
+            ['slug' => 'mercy-c300-amg', 'name' => 'Mercedes-Benz C300 AMG', 'class' => 'Premium', 'pax' => 4, 'status' => 'available'],
+            ['slug' => 'hiace-premio', 'name' => 'Toyota Hiace Premio', 'class' => 'Premium Van', 'pax' => 14, 'status' => 'available'],
+            ['slug' => 'hiace-commuter', 'name' => 'Toyota Hiace Commuter', 'class' => 'Van', 'pax' => 15, 'status' => 'available'],
+            ['slug' => 'elf-long-giga', 'name' => 'Isuzu Elf Long Giga', 'class' => 'Bus Mini', 'pax' => 20, 'status' => 'available'],
+            ['slug' => 'innova-venturer', 'name' => 'Toyota Innova Venturer', 'class' => 'MPV Premium', 'pax' => 7, 'status' => 'available'],
+            ['slug' => 'innova-reborn', 'name' => 'Toyota Innova Reborn', 'class' => 'MPV', 'pax' => 7, 'status' => 'available'],
         ] as $v) {
             Vehicle::updateOrCreate(['slug' => $v['slug']], $v);
         }

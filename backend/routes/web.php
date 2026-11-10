@@ -24,6 +24,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('routes', TravelRouteController::class)->only(['index', 'store', 'update', 'destroy'])->parameters(['routes' => 'route']);
     Route::resource('vehicles', VehicleController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::patch('vehicles/{vehicle}/status', [VehicleController::class, 'setStatus'])->name('vehicles.status');
     Route::resource('testimonials', TestimonialController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('users', UserController::class)->only(['index', 'store', 'update', 'destroy']);
 });

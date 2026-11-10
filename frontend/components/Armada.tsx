@@ -14,12 +14,12 @@ const LOCAL_IMG = new Set([
 ]);
 
 const FALLBACK: ApiVehicle[] = [
-  { id: 1, slug: "mercy-c300-amg", name: "Mercedes-Benz C300 AMG", class: "Premium", pax: 4, image: null },
-  { id: 2, slug: "hiace-premio", name: "Toyota Hiace Premio", class: "Premium Van", pax: 14, image: null },
-  { id: 3, slug: "hiace-commuter", name: "Toyota Hiace Commuter", class: "Van", pax: 15, image: null },
-  { id: 4, slug: "elf-long-giga", name: "Isuzu Elf Long Giga", class: "Bus Mini", pax: 20, image: null },
-  { id: 5, slug: "innova-venturer", name: "Toyota Innova Venturer", class: "MPV Premium", pax: 7, image: null },
-  { id: 6, slug: "innova-reborn", name: "Toyota Innova Reborn", class: "MPV", pax: 7, image: null },
+  { id: 1, slug: "mercy-c300-amg", name: "Mercedes-Benz C300 AMG", class: "Premium", pax: 4, status: "available", image: null },
+  { id: 2, slug: "hiace-premio", name: "Toyota Hiace Premio", class: "Premium Van", pax: 14, status: "available", image: null },
+  { id: 3, slug: "hiace-commuter", name: "Toyota Hiace Commuter", class: "Van", pax: 15, status: "available", image: null },
+  { id: 4, slug: "elf-long-giga", name: "Isuzu Elf Long Giga", class: "Bus Mini", pax: 20, status: "available", image: null },
+  { id: 5, slug: "innova-venturer", name: "Toyota Innova Venturer", class: "MPV Premium", pax: 7, status: "available", image: null },
+  { id: 6, slug: "innova-reborn", name: "Toyota Innova Reborn", class: "MPV", pax: 7, status: "available", image: null },
 ];
 
 export async function ArmadaGrid() {
@@ -56,6 +56,17 @@ export async function ArmadaGrid() {
                 <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-bold text-gold backdrop-blur">{u.class}</span>
                 <span className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-xs font-bold text-black">
                   <IconUsers width={13} height={13} /> {u.pax} pax
+                </span>
+                <span
+                  className={`absolute bottom-3 left-4 rounded-full px-3 py-1 text-xs font-bold backdrop-blur ${
+                    u.status === "full"
+                      ? "bg-red-500/90 text-white"
+                      : u.status === "maintenance"
+                        ? "bg-amber-500/90 text-black"
+                        : "bg-emerald-500/90 text-black"
+                  }`}
+                >
+                  {u.status === "full" ? "Penuh" : u.status === "maintenance" ? "Perawatan" : "Tersedia"}
                 </span>
               </div>
               <div className="border-t border-white/5 p-5">

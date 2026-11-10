@@ -3,6 +3,13 @@
 <label class="text-xs text-zinc-400">Nama Unit<input name="name" value="{{ old('name', $vehicle->name) }}" required class="{{ $field }} mt-1"></label>
 <label class="text-xs text-zinc-400">Kelas<input name="class" value="{{ old('class', $vehicle->class) }}" required class="{{ $field }} mt-1"></label>
 <label class="text-xs text-zinc-400">Kapasitas (pax)<input type="number" name="pax" value="{{ old('pax', $vehicle->pax) }}" required class="{{ $field }} mt-1"></label>
+<label class="text-xs text-zinc-400">Status Ketersediaan
+    <select name="status" class="{{ $field }} mt-1">
+        @foreach (\App\Models\Vehicle::STATUSES as $value => $label)
+            <option value="{{ $value }}" @selected(old('status', $vehicle->status ?? 'available') === $value)>{{ $label }}</option>
+        @endforeach
+    </select>
+</label>
 <label class="text-xs text-zinc-400">Harga / Hari (Rp)<input type="number" name="price_per_day" value="{{ old('price_per_day', $vehicle->price_per_day) }}" class="{{ $field }} mt-1"></label>
 <label class="text-xs text-zinc-400 sm:col-span-2">
     Upload Gambar (jpg/png/webp, max 4MB)

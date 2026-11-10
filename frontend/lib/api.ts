@@ -25,6 +25,7 @@ export type ApiVehicle = {
   name: string;
   class: string;
   pax: number;
+  status: "available" | "full" | "maintenance";
   image: string | null;
 };
 
